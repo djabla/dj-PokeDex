@@ -1,4 +1,5 @@
 <div class="content-area">
+    <ng-container *ngIf="!isError">
     <div *ngFor="let poke of pokeList">
         <mat-card class="content">
             <mat-card-header>
@@ -18,4 +19,8 @@
             </mat-card-content>
         </mat-card>
     </div>
+    </ng-container>
+    <ng-container *ngIf="isError">
+        <p>No Pokemon Found</p>
+    </ng-container>
 </div>

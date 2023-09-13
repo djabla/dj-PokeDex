@@ -9,7 +9,8 @@ import { PokemonDataService } from 'src/app/services/pokemon-data.service';
 export class ListViewComponent implements OnInit {
 
   public pokeList: any[] = [];
-  private readonly limit = 30;
+  private readonly limit = 20;
+  public isError: boolean = false;
 
   public constructor(
     private pokemonDataService: PokemonDataService
