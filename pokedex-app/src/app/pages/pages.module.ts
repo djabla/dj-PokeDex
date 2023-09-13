@@ -1,0 +1,18 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { PagesRoutingModule } from './pages-routing.module';
+import { ListViewComponent } from './list-view/list-view.component';
+import { SelectViewComponent } from './select-view/select-view.component';
+
+@NgModule({
+  declarations: [
+    ListViewComponent,
+    SelectViewComponent,
+  ],
+  imports: [
+    CommonModule,
+    PagesRoutingModule
+  ]
+})
+export class PagesModule { }
