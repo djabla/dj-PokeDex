@@ -1,0 +1,16 @@
+.content-area{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    padding-bottom: 55px;
+}
+.content {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.center-text {
+    text-align: center;
+}

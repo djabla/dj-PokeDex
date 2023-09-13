@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ListViewComponent } from './list-view/list-view.component';
 import { SelectViewComponent } from './select-view/select-view.component';
+import { GlobalModules } from '../global.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { SelectViewComponent } from './select-view/select-view.component';
   ],
   imports: [
     CommonModule,
-    PagesRoutingModule
+    PagesRoutingModule,
+    GlobalModules
   ]
 })
 export class PagesModule { }

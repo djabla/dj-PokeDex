@@ -9,6 +9,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
     declarations: [],
@@ -16,6 +18,7 @@ import {MatIconModule} from '@angular/material/icon';
     exports: [
         //Common Modules
         FormsModule,
+        HttpClientModule,
         //Angular Material Modules
         MatCommonModule,
         MatInputModule,
@@ -25,7 +28,8 @@ import {MatIconModule} from '@angular/material/icon';
         MatFormFieldModule,
         MatToolbarModule,
         MatSidenavModule,
-        MatIconModule
+        MatIconModule,
+        MatChipsModule,
         //Other Libraries Modules
 
     ]
