@@ -11,6 +11,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import {MatChipsModule} from '@angular/material/chips';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [],
@@ -19,6 +20,7 @@ import {MatChipsModule} from '@angular/material/chips';
         //Common Modules
         FormsModule,
         HttpClientModule,
+        ReactiveFormsModule,
         //Angular Material Modules
         MatCommonModule,
         MatInputModule,

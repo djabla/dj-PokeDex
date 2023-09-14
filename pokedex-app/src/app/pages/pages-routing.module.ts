@@ -21,6 +21,11 @@ const routes: Routes = [
   {
     path: 'details/:name',
     component: SelectViewComponent,
+  },
+  {
+    path: 'search/pokemon/:name',
+    redirectTo: 'details/:name',
+    pathMatch: 'full'
   }
 ];
 

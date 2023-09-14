@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PokemonDataService } from 'src/app/services/pokemon-data.service';
 
 @Component({
@@ -19,9 +19,13 @@ export class SelectViewComponent implements OnInit {
   ) {}
   
   ngOnInit(): void {
-    this.pokemonName = this.route.snapshot.paramMap.get('name');
-    console.log(this.pokemonName);
-    this.getDetails();
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.pokemonName = params.get('name');
+      console.log(this.pokemonName);
+
+      // Fetch details for the new PokemonName
+      this.getDetails();
+    });
   }
 
   getDetails(){

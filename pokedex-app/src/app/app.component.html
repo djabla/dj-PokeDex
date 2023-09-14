@@ -1,5 +1,10 @@
-<pokedex-header></pokedex-header>
-<div style="min-height: 100vh;">
+<pokedex-header style="position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;">
+</pokedex-header>
+<div style="min-height: 100vh; padding-top: 75px;">
     <router-outlet></router-outlet>
 </div>
 <pokedex-footer style="margin-top: auto;"></pokedex-footer>

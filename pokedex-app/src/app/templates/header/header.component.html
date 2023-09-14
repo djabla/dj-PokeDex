@@ -1,16 +1,35 @@
 <p>
-    <mat-toolbar color="primary">
-      <span [routerLink]="['/pages']" style="cursor: pointer;">POKEDEX APP</span>
-      <span class="spacer"></span>
-      <button mat-button>
-        <span>Home</span>
-      </button>
-      <button mat-button>
-        <span>Feature Pokemon</span>
-      </button>
-      <button mat-button>
-        <span>Filter</span>
-      </button>
-    </mat-toolbar>
-  </p>
+  <mat-toolbar color="primary">
+    <span [routerLink]="['/pages']" style="cursor: pointer;">POKEDEX APP</span>
+    <form>
+      <mat-form-field style="width: 30vw; scale: 80%;">
+        <mat-label>Search</mat-label>
+        <input matInput
+          [matAutocomplete]="auto"
+          [formControl]="pokemonCtrl"
+          #input>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let pokemon of filteredPokemon | async" 
+            [value]="pokemon.name"
+            clickable
+            (click)="goToDetails(pokemon.name);">
+            <img [src]="pokemon.img" alt="">
+            <span>{{capitalizeFirstLetter(pokemon.name)}}</span> |
+            <small>ID: #{{convertToFourDigits(pokemon.id)}}</small>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+    <span class="spacer"></span>
+    <button mat-button>
+      <span>Home</span>
+    </button>
+    <button mat-button>
+      <span>Feature Pokemon</span>
+    </button>
+    <button mat-button>
+      <span>Filter</span>
+    </button>
+  </mat-toolbar>
+</p>
   

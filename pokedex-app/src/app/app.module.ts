@@ -20,7 +20,7 @@ import { GlobalModules } from './global.module';
     AppRoutingModule,
     PagesModule,
     BrowserAnimationsModule,
-    GlobalModules
+    GlobalModules,
   ],
   providers: [],
   bootstrap: [AppComponent]

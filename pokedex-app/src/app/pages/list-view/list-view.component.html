@@ -1,14 +1,14 @@
 <div class="content-area">
     <ng-container *ngIf="!isError">
     <div *ngFor="let poke of pokeList">
-        <mat-card class="content" clickable (click)="goToDetails(poke.detail.name)">
+        <mat-card class="content" style="cursor: pointer;" clickable (click)="goToDetails(poke.detail.name)">
             <mat-card-header>
                 <mat-card-title class="center-text">
                     {{capitalizeFirstLetter(poke.detail.name)}}
                 </mat-card-title>
                 <mat-card-subtitle>
                     <mat-chip-listbox >
-                        <mat-chip *ngFor="let types of poke.detail.types">
+                        <mat-chip *ngFor="let types of poke.detail.types" [ngStyle]="{ 'background-color': typeColor(types.type.name) }">
                             {{types.type.name}}
                         </mat-chip>
                     </mat-chip-listbox>
