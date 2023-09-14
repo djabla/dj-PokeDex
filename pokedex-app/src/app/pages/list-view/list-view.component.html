@@ -1,7 +1,7 @@
 <div class="content-area">
     <ng-container *ngIf="!isError">
     <div *ngFor="let poke of pokeList">
-        <mat-card class="content">
+        <mat-card class="content" clickable (click)="goToDetails(poke.detail.name)">
             <mat-card-header>
                 <mat-card-title class="center-text">
                     {{capitalizeFirstLetter(poke.detail.name)}}

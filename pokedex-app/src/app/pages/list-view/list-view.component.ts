@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonDataService } from 'src/app/services/pokemon-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pokedex-list-view',
@@ -13,7 +14,8 @@ export class ListViewComponent implements OnInit {
   public isError: boolean = false;
 
   public constructor(
-    private pokemonDataService: PokemonDataService
+    private pokemonDataService: PokemonDataService,
+    private router: Router,
   ) { }
   ngOnInit(): void {
     this.getPokemonList();
@@ -33,6 +35,10 @@ export class ListViewComponent implements OnInit {
       })
     });
     console.log(this.pokeList);
+  }
+
+  goToDetails(name: any){
+    this.router.navigate([`/pages/details/${name}`]);
   }
 
   capitalizeFirstLetter(string: string) {

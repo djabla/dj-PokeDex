@@ -15,6 +15,11 @@ const routes: Routes = [
   },
   {
     path: 'details',
+    redirectTo: 'list',
+    pathMatch: 'full'
+  },
+  {
+    path: 'details/:name',
     component: SelectViewComponent,
   }
 ];
