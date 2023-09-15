@@ -1,32 +1,41 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListViewComponent } from './list-view/list-view.component';
-import { SelectViewComponent } from './select-view/select-view.component';
+import { ListViewComponent } from './pokemon/list-view/list-view.component';
+import { SelectViewComponent } from './pokemon/select-view/select-view.component';
+import { BerryListComponent } from './berry/berry-list/berry-list.component';
+import { BerrySelectComponent } from './berry/berry-select/berry-select.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'list',
+    redirectTo: 'pokemon',
     pathMatch: 'full'
   },
   {
-    path: 'list',
+    path: 'pokemon',
     component: ListViewComponent,
-  },
-  {
-    path: 'details',
-    redirectTo: 'list',
     pathMatch: 'full'
   },
   {
-    path: 'details/:name',
+    path: 'pokemon/:name',
     component: SelectViewComponent,
+    pathMatch: 'full'
   },
   {
     path: 'search/pokemon/:name',
-    redirectTo: 'details/:name',
+    redirectTo: 'pokemon/:name',
     pathMatch: 'full'
-  }
+  },
+  {
+    path: 'berry',
+    component: BerryListComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'berry/:name',
+    component: BerrySelectComponent,
+    pathMatch: 'full'
+  },
 ];
 
 @NgModule({

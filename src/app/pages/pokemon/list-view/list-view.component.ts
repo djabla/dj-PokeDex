@@ -38,7 +38,7 @@ export class ListViewComponent implements OnInit {
   }
 
   goToDetails(name: any){
-    this.router.navigate([`/pages/details/${name}`]);
+    this.router.navigate([`pages/pokemon/${name}`]);
   }
 
   capitalizeFirstLetter(string: string) {
