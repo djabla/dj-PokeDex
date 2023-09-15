@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { PokemonDataService } from 'src/app/services/pokemon-data.service';
+import { PokemonDataService } from 'src/app/services/pokemon/pokemon-data.service';
 
 @Component({
   selector: 'pokedex-select-view',
