@@ -1,1 +1,45 @@
-<p>berry-list works!</p>
+<ng-container *ngIf="berryList && berryList.length > 0">
+    <table mat-table [dataSource]="berryList" style="width: 100%;">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let berry"><a [routerLink]="['/berry', berry.id]">{{berry.id}}</a></td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let berry"><a [routerLink]="['/berry', berry.name]">
+                {{capitalizeFirstLetter(berry.name)}}
+            </a></td>
+        </ng-container>
+        <ng-container matColumnDef="firmness">
+            <th mat-header-cell *matHeaderCellDef>Firmness</th>
+            <td mat-cell *matCellDef="let berry">{{capitalizeFirstLetter(berry.firmness)}}</td>
+        </ng-container>
+        <ng-container matColumnDef="flavor">
+            <th mat-header-cell *matHeaderCellDef>Flavor</th>
+            <td mat-cell *matCellDef="let berry">
+                <mat-chip-listbox>
+                    <ng-container *ngFor="let item of berry.flavor">
+                        <mat-chip *ngIf="item.potency > 0">
+                            {{item.flavor.name}}
+                        </mat-chip>
+                    </ng-container>
+                </mat-chip-listbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let berry">{{capitalizeFirstLetter(berry.type)}}</td>
+        </ng-container>
+        <ng-container matColumnDef="power">
+            <th mat-header-cell *matHeaderCellDef>Power</th>
+            <td mat-cell *matCellDef="let berry">{{berry.power}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</ng-container>
+
+<ng-container *ngIf="!berryList || berryList.length === 0">
+    <p>No data available.</p>
+</ng-container>

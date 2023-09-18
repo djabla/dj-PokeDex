@@ -12,6 +12,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import {MatChipsModule} from '@angular/material/chips';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatTableModule} from '@angular/material/table';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
     declarations: [],
@@ -32,6 +34,8 @@ import { ReactiveFormsModule } from '@angular/forms';
         MatSidenavModule,
         MatIconModule,
         MatChipsModule,
+        MatTableModule,
+        MatProgressBarModule
         //Other Libraries Modules
 
     ]

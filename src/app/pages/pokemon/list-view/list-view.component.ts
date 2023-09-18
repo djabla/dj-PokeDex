@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PokemonDataService } from 'src/app/services/pokemon-data.service';
+import { PokemonDataService } from 'src/app/services/pokemon/pokemon-data.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,7 +21,7 @@ export class ListViewComponent implements OnInit {
     this.getPokemonList();
   }
 
-  getPokemonList(){
+  private getPokemonList(){
     this.pokemonDataService.getList(this.limit).subscribe((raw: any) => {
       raw.results.forEach((item: any) => {
         this.pokemonDataService.getDetails(item.name).subscribe((detail: any) => {
@@ -37,17 +37,17 @@ export class ListViewComponent implements OnInit {
     console.log(this.pokeList);
   }
 
-  goToDetails(name: any){
+  public goToDetails(name: any){
     this.router.navigate([`pages/pokemon/${name}`]);
   }
 
-  capitalizeFirstLetter(string: string) {
+  public capitalizeFirstLetter(string: string) {
     const words = string.split(' ');
     const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
     return capitalizedWords.join(' ');
   }
 
-  typeColor(type: any){
+  public typeColor(type: any){
     switch(type){
       case 'grass': return '#00FF00';
       case 'fire': return 'red';

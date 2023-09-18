@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {debounceTime, delay, distinctUntilChanged, map, startWith} from 'rxjs/operators';
-import { PokemonDataService } from 'src/app/services/pokemon-data.service';
+import { PokemonDataService } from 'src/app/services/pokemon/pokemon-data.service';
 import { Router } from '@angular/router';
 
 export interface Pokemon {
