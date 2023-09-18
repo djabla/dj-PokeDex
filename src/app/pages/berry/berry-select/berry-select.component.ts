@@ -10,7 +10,9 @@ import { BerryService } from 'src/app/services/berry/berry.service';
 export class BerrySelectComponent implements OnInit {
 
   public berryDetails: any;
+  public berryDesc: any;
   public berryName: any;
+  public isLoading: boolean = true;
 
   public constructor(
     private berryService: BerryService,
@@ -29,7 +31,16 @@ export class BerrySelectComponent implements OnInit {
     this.berryService.getBerryDetails(this.berryName).subscribe((detail: any) => {
       this.berryDetails = detail;
       console.log(this.berryDetails);
-    })
+      if(this.berryDetails){
+        this.berryService.getBerryDesc(this.berryDetails.item.url).subscribe((desc: any) => {
+          this.berryDesc = desc;
+          console.log(this.berryDesc);
+          if(this.berryDesc){
+            this.isLoading = false;
+          }
+        });
+      }     
+    });
   }
 
   public capitalizeFirstLetter(string: string) {

@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { BerryService } from 'src/app/services/berry/berry.service';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
+export interface Berry {
+  id: number;
+  name: string;
+  firmness: string;
+  flavor: string;
+  type: string;
+  power: number;
+}
 
 @Component({
   selector: 'pokedex-berry-list',
@@ -10,7 +19,8 @@ import { Router } from '@angular/router';
 })
 export class BerryListComponent implements OnInit {
 
-  public berryList: any[] = [];
+  public berryList: Berry[] = [];
+  displayedColumns: string[] = ['id', 'name', 'firmness', 'flavor', 'type', 'power'];
 
   public constructor(
     private berryService: BerryService,
@@ -21,17 +31,24 @@ export class BerryListComponent implements OnInit {
     this.getBerryList();
   }
 
-  private getBerryList(){
+  private getBerryList() {
     this.berryService.getBerryList().subscribe((raw: any) => {
-      raw.results.forEach((item: any) => {
-        this.berryService.getBerryDetails(item.name).subscribe((detail: any) => {
-          this.berryList.push({
-            detail
-          })
-        })
-      })
+      const observables = raw.results.map((item: any) =>
+        this.berryService.getBerryDetails(item.name)
+      );
+  
+      forkJoin(observables).subscribe((details: any) => {
+        this.berryList = details.map((detail: any) => ({
+          id: detail.id,
+          name: detail.name,
+          firmness: detail.firmness.name,
+          flavor: detail.flavors,
+          type: detail.natural_gift_type.name,
+          power: detail.natural_gift_power
+        }));
+        console.log(this.berryList);
+      });
     });
-    console.log(this.berryList);
   }
 
   public goToBerryDetails(name: any){

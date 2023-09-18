@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
+
 export class BerryService {
 
   constructor(
@@ -22,5 +23,9 @@ export class BerryService {
 
   getBerryDetails(id: any){
     return this.http.get(`https://pokeapi.co/api/v2/berry/${id}`);
+  }
+
+  getBerryDesc(url: any){
+    return this.http.get(url);
   }
 }
