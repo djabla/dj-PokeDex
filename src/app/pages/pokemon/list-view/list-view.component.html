@@ -1,26 +1,54 @@
-<div class="content-area">
-    <ng-container *ngIf="!isError">
-    <div *ngFor="let poke of pokeList">
-        <mat-card class="content" style="cursor: pointer;" clickable (click)="goToDetails(poke.detail.name)">
-            <mat-card-header>
-                <mat-card-title class="center-text">
-                    {{capitalizeFirstLetter(poke.detail.name)}}
-                </mat-card-title>
-                <mat-card-subtitle>
-                    <mat-chip-listbox >
-                        <mat-chip *ngFor="let types of poke.detail.types" [ngStyle]="{ 'background-color': typeColor(types.type.name) }">
-                            {{types.type.name}}
+<div class="flex flex-column justify-content-center align-items-center">
+    <div class="header-area">
+        <span class="text-4xl font-bold" style="margin: 0 0 12px;">Pokedex</span>
+        <span class="text-lg text-700" style="margin: 0 0 12px;">Search for a Pokemon by Name or by National Pokedex Number</span>
+        <div class="flex flex-row gap-3" style="width: 60vw;">
+            <p-autoComplete class="search-bar" [(ngModel)]="selectedItem" [suggestions]="pokeList" 
+            [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"></p-autoComplete>
+            <p-button icon="pi pi-filter-fill" styleClass="p-button-help"></p-button>
+        </div>
+    </div>
+    <div class="content-area shadow-3">
+        <ng-container *ngIf="!isError">
+        <div *ngFor="let poke of pokeList" [style]="{ width: '300px' }">
+           <!--  <div class="flex flex-column align-items-center shadow-3" 
+            style="width: 100%; height: 400px; border: 1px solid gray; border-radius: 12px;">
+                <div class="flex flex-row justify-content-center align-items-center" 
+                style="width: 90%; height: 250px; margin-top: 10px; border-radius: 9px;" 
+                [ngStyle]="{ 'background-image': bgColor(poke.detail.types), 'background-color': bgColor(poke.detail.types) }">
+                    <img [src]="poke.detail.sprites.front_default"
+                    style="aspect-ratio: 1/1; width: 225px;">
+                </div>
+                <div class="flex flex-column justify-content-center align-items-center">
+                    <span class="text-xl font-semibold" style="padding-top: 10px;">{{capitalizeFirstLetter(poke.detail.name)}}</span>
+                    <span class="text-lg font medium text-600" style="padding-top: 10px; padding-bottom: 10px;">#{{convertToFourDigits(poke.detail.id)}}</span>
+                    <mat-chip-listbox>
+                        <mat-chip *ngFor="let types of poke.detail.types" 
+                        [ngStyle]="{ 'background-color': typeColor(types.type.name) }">
+                            {{capitalizeFirstLetter(types.type.name)}}
                         </mat-chip>
                     </mat-chip-listbox>
-                </mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <img [src]="poke.detail.sprites.front_default" alt="">
-            </mat-card-content>
-        </mat-card>
+                </div>
+            </div> -->
+            <p-card [header]="capitalizeFirstLetter(poke.detail.name)"
+            subheader="#{{convertToFourDigits(poke.detail.id)}}">
+                <ng-template pTemplate="header">
+                    <div class="flex flex-row justify-content-center align-items-center"
+                    [ngStyle]="{ 'background-image': bgColor(poke.detail.types), 'background-color': bgColor(poke.detail.types) }">
+                        <img [src]="poke.detail.sprites.front_default" style="aspect-ratio: 1/1; max-width: 200px;">
+                    </div>
+                </ng-template>
+                <mat-chip-listbox >
+                    <mat-chip *ngFor="let types of poke.detail.types" 
+                    [ngStyle]="{ 'background-color': typeColor(types.type.name) }">
+                        {{capitalizeFirstLetter(types.type.name)}}
+                    </mat-chip>
+                </mat-chip-listbox>
+            </p-card>
+        </div>
+        </ng-container>
+        <ng-container *ngIf="isError">
+            <p>No Pokemon Found</p>
+        </ng-container>
     </div>
-    </ng-container>
-    <ng-container *ngIf="isError">
-        <p>No Pokemon Found</p>
-    </ng-container>
 </div>
