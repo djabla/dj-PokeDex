@@ -1,6 +1,9 @@
 <p>
   <mat-toolbar color="primary">
-    <span [routerLink]="['/pages']" style="cursor: pointer;">POKEDEX APP</span>
+    <p-button pRipple styleClass="p-button-rounded p-button-text" [routerLink]="['/pages/pokemon']">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/2052px-Pok%C3%A9_Ball_icon.svg.png" 
+      style="aspect-ratio: 1/1; width: 3rem;"/>
+    </p-button>
     <form>
       <mat-form-field style="width: 30vw; scale: 80%;">
         <mat-label>Search</mat-label>

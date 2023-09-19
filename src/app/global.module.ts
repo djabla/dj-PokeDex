@@ -14,6 +14,11 @@ import {MatChipsModule} from '@angular/material/chips';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatTableModule} from '@angular/material/table';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ButtonModule } from 'primeng/button';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { RippleModule } from 'primeng/ripple';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
     declarations: [],
@@ -35,8 +40,13 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
         MatIconModule,
         MatChipsModule,
         MatTableModule,
-        MatProgressBarModule
-        //Other Libraries Modules
+        MatProgressBarModule,
+        //PrimeNG Modules
+        AutoCompleteModule,
+        ButtonModule,
+        ScrollPanelModule,
+        RippleModule,
+        CardModule,
 
     ]
 })

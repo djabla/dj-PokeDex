@@ -1,9 +1,33 @@
+.header-area{
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .search-bar{
+        width: 60vw;
+    }
+}
+
 .content-area{
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
     justify-content: center;
-    padding-bottom: 55px;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 35px;
+    max-width: 90vw;
+    border: 3px solid rgb(49, 45, 45);
+    border-radius: 12px;
+    overflow-y: scroll;
+    max-height: 65vh;
+}
+.content-area::-webkit-scrollbar{
+    display: none;
 }
 .content {
     width: 300px;
