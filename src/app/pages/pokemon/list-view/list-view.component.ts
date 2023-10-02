@@ -1,6 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonDataService } from 'src/app/services/pokemon/pokemon-data.service';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+
+interface AutoCompleteCompleteEvent {
+  originalEvent: Event;
+  query: string;
+}
+
+export interface Pokemon {
+  id: any;
+  name: string;
+  type1: any;
+  type2?: any;
+  image: string;
+}
 
 @Component({
   selector: 'pokedex-list-view',
@@ -9,10 +23,19 @@ import { Router } from '@angular/router';
 })
 export class ListViewComponent implements OnInit {
 
-  public pokeList: any[] = [];
+  formGroup!: FormGroup;
+  filteredPokemon!: any[];
+
+  public pokeList: Pokemon[] = [];
+  private listHolder: Pokemon[] = [];
   private readonly limit = 50;
   public isError: boolean = false;
   public selectedItem: any;
+
+  public pokemonTypes: string[] = [
+    'Normal', 'Fire', 'Water', 'Grass', 'Electric', 'Ice', 'Fighting', 'Poison', 'Ground', 'Flying', 'Psychic', 'Bug', 'Rock', 'ghost', 'Dragon', 'Dark', 'Steel', 'Fairy'
+  ];
+  selectedType: any = undefined;
 
   public constructor(
     private pokemonDataService: PokemonDataService,
@@ -20,17 +43,36 @@ export class ListViewComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.getPokemonList();
+    this.listHolder = this.pokeList;
+    this.formGroup = new FormGroup({
+      selectedPokemon: new FormControl<object | null>(null)
+    });
+  }
+
+  filterPokemon(event: AutoCompleteCompleteEvent) {
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.pokeList as any[]).length; i++) {
+        let pokemon = (this.pokeList as any[])[i];
+        if (pokemon.name.toLowerCase().includes(query.toLowerCase())) {
+            filtered.push(pokemon);
+        }
+    }
+
+    this.filteredPokemon = filtered;
   }
 
   private getPokemonList(){
     this.pokemonDataService.getList(this.limit).subscribe((raw: any) => {
       raw.results.forEach((item: any) => {
         this.pokemonDataService.getDetails(item.name).subscribe((detail: any) => {
-          this.pokemonDataService.getDesc(item.name).subscribe((desc: any) => {
-            this.pokeList.push({
-              detail,
-              description: desc
-            })
+          this.pokeList.push({
+            id: this.convertToFourDigits(detail.id),
+            name: detail.name,
+            type1: detail.types[0].type.name,
+            type2: detail.types[1] ? detail.types[1].type.name : null,
+            image: detail.sprites.front_default
           })
         })
       })
@@ -42,8 +84,24 @@ export class ListViewComponent implements OnInit {
     this.router.navigate([`pages/pokemon/${name}`]);
   }
 
-  public filterBy(){
+  public filterByType(){
+    if(this.selectedType != undefined){
+      let filter = this.selectedType.toLowerCase();
+      let temp: Pokemon[] = [];
+      this.listHolder.forEach((item: any) => {
+        if(item.type1 == filter || item.type2 == filter){
+          temp.push(item);
+        }
+      })
+      this.pokeList = temp;
+    }else{
+      this.pokeList = this.listHolder;
+    }
+  }
 
+  public resetFilter(){
+    this.selectedType = undefined;
+    this.filterByType();
   }
 
   public capitalizeFirstLetter(string: string) {
@@ -102,14 +160,11 @@ export class ListViewComponent implements OnInit {
     }
   }
 
-  public bgColor(type: any){
-    if(type.length == 1){
-      let color = this.bgTypeColor(type[0].type.name);
-      return color;
-    } else if(type.length == 2) {
-      return 'linear-gradient(to right, ' + this.bgTypeColor(type[0].type.name) + ', ' + this.bgTypeColor(type[1].type.name) + ')';
+  public bgColor(type1: any, type2: any){
+    if(type2 != null){
+      return 'linear-gradient(45deg, ' + this.bgTypeColor(type1) + ', ' + this.bgTypeColor(type2) + ')';
     } else {
-      return 'black';
+      return this.bgTypeColor(type1);
     }
   }
 

@@ -4,25 +4,6 @@
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/2052px-Pok%C3%A9_Ball_icon.svg.png" 
       style="aspect-ratio: 1/1; width: 3rem;"/>
     </p-button>
-    <form>
-      <mat-form-field style="width: 30vw; scale: 80%;">
-        <mat-label>Search</mat-label>
-        <input matInput
-          [matAutocomplete]="auto"
-          [formControl]="pokemonCtrl"
-          #input>
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let pokemon of filteredPokemon | async" 
-            [value]="pokemon.name"
-            clickable
-            (click)="goToDetails(pokemon.name);">
-            <img [src]="pokemon.img" alt="">
-            <span>{{capitalizeFirstLetter(pokemon.name)}}</span> |
-            <small>ID: #{{convertToFourDigits(pokemon.id)}}</small>
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </form>
     <span class="spacer"></span>
     <button mat-button>
       <span>Home</span>

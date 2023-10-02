@@ -19,6 +19,11 @@ import { ButtonModule } from 'primeng/button';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { RippleModule } from 'primeng/ripple';
 import { CardModule } from 'primeng/card';
+import { TabViewModule } from 'primeng/tabview';
+import { GalleriaModule } from 'primeng/galleria';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { DropdownModule } from 'primeng/dropdown';
+import { AnimateModule } from 'primeng/animate';
 
 @NgModule({
     declarations: [],
@@ -47,6 +52,11 @@ import { CardModule } from 'primeng/card';
         ScrollPanelModule,
         RippleModule,
         CardModule,
+        TabViewModule,
+        GalleriaModule,
+        OverlayPanelModule,
+        DropdownModule,
+        AnimateModule,
 
     ]
 })

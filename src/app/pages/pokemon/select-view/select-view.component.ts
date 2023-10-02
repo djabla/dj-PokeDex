@@ -12,6 +12,22 @@ export class SelectViewComponent implements OnInit {
   private pokemonName: any;
   public pokemonDetails: any;
   public pokemonDescription: any;
+  public pokemonImg: any[] = [];
+
+  responsiveOptions: any[] = [
+    {
+        breakpoint: '1024px',
+        numVisible: 5
+    },
+    {
+        breakpoint: '768px',
+        numVisible: 3
+    },
+    {
+        breakpoint: '560px',
+        numVisible: 1
+    }
+  ];
 
   public constructor(
     private pokemonDataService: PokemonDataService,
@@ -33,6 +49,7 @@ export class SelectViewComponent implements OnInit {
       (detail: any) => {
         this.pokemonDetails = detail;
         console.log(this.pokemonDetails);
+        this.assignImg();
       }
     );
     this.pokemonDataService.getDesc(this.pokemonName).subscribe(
@@ -41,6 +58,14 @@ export class SelectViewComponent implements OnInit {
         console.log(this.pokemonDescription);
       }
     )
+  }
+
+  assignImg(){
+    this.pokemonImg[0] = this.pokemonDetails.sprites.front_default;
+    this.pokemonImg[1] = this.pokemonDetails.sprites.back_default;
+    this.pokemonImg[2] = this.pokemonDetails.sprites.front_shiny;
+    this.pokemonImg[3] = this.pokemonDetails.sprites.back_shiny;
+    console.log(this.pokemonImg);
   }
 
   capitalizeFirstLetter(string: string) {
@@ -71,22 +96,58 @@ export class SelectViewComponent implements OnInit {
 
   typeColor(type: any){
     switch(type){
-      case 'grass': return '#00FF00';
-      case 'fire': return 'red';
-      case 'water': return 'blue';
-      case 'electric': return 'yellow';
-      case 'poison': return 'purple';
-      case 'ground': return 'brown';
-      case 'flying': return 'orange';
-      case 'psychic': return 'pink';
-      case 'bug': return 'green';
-      case 'rock': return 'brown';
-      case 'ghost': return 'purple';
-      case 'ice': return 'blue';
-      case 'dragon': return 'purple';
-      case 'dark': return 'black';
-      case 'fairy': return 'pink';
-      default: return 'black';
+      case 'grass': return '#7AC74C';
+      case 'fire': return '#EE8130';
+      case 'water': return '#6390F0';
+      case 'electric': return '#F7D02C';
+      case 'poison': return '#A33EA1';
+      case 'ground': return '#E2BF65';
+      case 'flying': return '#A98FF3';
+      case 'psychic': return '#F95587';
+      case 'bug': return '#A6B91A';
+      case 'fighting': return '#C22E28';
+      case 'rock': return '#B6A136';
+      case 'ghost': return '#735797';
+      case 'ice': return '#96D9D6';
+      case 'dragon': return '#6F35FC';
+      case 'dark': return '#705746';
+      case 'steel': return '#B7B7CE';
+      case 'fairy': return '#D685AD';
+      default: return '#A8A77A';
+    }
+  }
+
+  private bgTypeColor(type: any){
+    switch(type){
+      case 'grass': return '#B4D3B2';
+      case 'fire': return '#FFB347';
+      case 'water': return '#78A2CC';
+      case 'electric': return '#E1AD01';
+      case 'poison': return '#B19CD9';
+      case 'ground': return '#E2BF65';
+      case 'flying': return '#A98FF3';
+      case 'psychic': return '#F95587';
+      case 'bug': return '#56AE57';
+      case 'fighting': return '#C22E28';
+      case 'rock': return '#B6A136';
+      case 'ghost': return '#735797';
+      case 'ice': return '#96D9D6';
+      case 'dragon': return '#6F35FC';
+      case 'dark': return '#705746';
+      case 'steel': return '#B7B7CE';
+      case 'fairy': return '#D685AD';
+      default: return '#A8A77A';
+    }
+  }
+
+  public bgColor(type: any){
+    if(type.length == 1){
+      let color = this.bgTypeColor(type[0].type.name);
+      return color;
+    } else if(type.length == 2) {
+      return 'linear-gradient(135deg, ' + this.bgTypeColor(type[0].type.name) + ', 60%, ' + this.bgTypeColor(type[1].type.name) + ')';
+    } else {
+      return 'black';
     }
   }
   
