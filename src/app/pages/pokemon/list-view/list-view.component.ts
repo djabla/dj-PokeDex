@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PokemonDataService } from 'src/app/services/pokemon/pokemon-data.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SelectViewComponent } from '../select-view/select-view.component';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -14,12 +16,14 @@ export interface Pokemon {
   type1: any;
   type2?: any;
   image: string;
+  detail: any;
 }
 
 @Component({
   selector: 'pokedex-list-view',
   templateUrl: './list-view.component.html',
-  styleUrls: ['./list-view.component.scss']
+  styleUrls: ['./list-view.component.scss'],
+  providers: [DialogService]
 })
 export class ListViewComponent implements OnInit {
 
@@ -27,10 +31,13 @@ export class ListViewComponent implements OnInit {
   filteredPokemon!: any[];
 
   public pokeList: Pokemon[] = [];
+  public searchList: Pokemon[] = [];
   private listHolder: Pokemon[] = [];
   private readonly limit = 50;
   public isError: boolean = false;
-  public selectedItem: any;
+  dialogVisible: boolean = false;
+  public pokemonDetails: any;
+  ref: DynamicDialogRef | undefined;
 
   public pokemonTypes: string[] = [
     'Normal', 'Fire', 'Water', 'Grass', 'Electric', 'Ice', 'Fighting', 'Poison', 'Ground', 'Flying', 'Psychic', 'Bug', 'Rock', 'ghost', 'Dragon', 'Dark', 'Steel', 'Fairy'
@@ -40,10 +47,12 @@ export class ListViewComponent implements OnInit {
   public constructor(
     private pokemonDataService: PokemonDataService,
     private router: Router,
+    public dialogService: DialogService,
   ) { }
   ngOnInit(): void {
     this.getPokemonList();
     this.listHolder = this.pokeList;
+    this.getSearchList();
     this.formGroup = new FormGroup({
       selectedPokemon: new FormControl<object | null>(null)
     });
@@ -53,8 +62,8 @@ export class ListViewComponent implements OnInit {
     let filtered: any[] = [];
     let query = event.query;
 
-    for (let i = 0; i < (this.pokeList as any[]).length; i++) {
-        let pokemon = (this.pokeList as any[])[i];
+    for (let i = 0; i < (this.searchList as any[]).length; i++) {
+        let pokemon = (this.searchList as any[])[i];
         if (pokemon.name.toLowerCase().includes(query.toLowerCase())) {
             filtered.push(pokemon);
         }
@@ -68,16 +77,51 @@ export class ListViewComponent implements OnInit {
       raw.results.forEach((item: any) => {
         this.pokemonDataService.getDetails(item.name).subscribe((detail: any) => {
           this.pokeList.push({
-            id: this.convertToFourDigits(detail.id),
+            id: detail.id,
             name: detail.name,
             type1: detail.types[0].type.name,
             type2: detail.types[1] ? detail.types[1].type.name : null,
-            image: detail.sprites.front_default
+            image: detail.sprites.front_default,
+            detail: detail,
           })
         })
       })
     });
     console.log(this.pokeList);
+  }
+
+  private getSearchList(){
+    this.pokemonDataService.getList(100).subscribe((raw: any) => {
+      raw.results.forEach((item: any) => {
+        this.pokemonDataService.getDetails(item.name).subscribe((detail: any) => {
+          this.searchList.push({
+            id: detail.id,
+            name: detail.name,
+            type1: detail.types[0].type.name,
+            type2: detail.types[1] ? detail.types[1].type.name : null,
+            image: detail.sprites.front_default,
+            detail: detail,
+          })
+        })
+      })
+    });
+  }
+
+  openDetails(detail: any){
+    this.ref = this.dialogService.open(SelectViewComponent, {
+      width: '70vw',
+      height: '95vh',
+      maximizable: true,
+      closeOnEscape: true,
+      header: this.capitalizeFirstLetter(detail.name),
+      data: {
+        detail: detail.detail,
+        name: detail.name,
+        type1: detail.type1,
+        type2: detail.type2,
+        id: detail.id,
+      }
+    })
   }
 
   public goToDetails(name: any){

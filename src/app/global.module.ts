@@ -24,6 +24,10 @@ import { GalleriaModule } from 'primeng/galleria';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DropdownModule } from 'primeng/dropdown';
 import { AnimateModule } from 'primeng/animate';
+import { InputTextModule } from 'primeng/inputtext';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @NgModule({
     declarations: [],
@@ -57,6 +61,10 @@ import { AnimateModule } from 'primeng/animate';
         OverlayPanelModule,
         DropdownModule,
         AnimateModule,
+        InputTextModule,
+        DialogModule,
+        DynamicDialogModule,
+        ProgressBarModule,
 
     ]
 })

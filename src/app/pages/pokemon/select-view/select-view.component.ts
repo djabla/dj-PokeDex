@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PokemonDataService } from 'src/app/services/pokemon/pokemon-data.service';
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'pokedex-select-view',
   templateUrl: './select-view.component.html',
-  styleUrls: ['./select-view.component.scss']
+  styleUrls: ['./select-view.component.scss'],
+  providers: [DynamicDialogRef]
 })
 export class SelectViewComponent implements OnInit {
 
   private pokemonName: any;
+  public pokemonData: any;
   public pokemonDetails: any;
   public pokemonDescription: any;
+  public pokemonGender: any;
   public pokemonImg: any[] = [];
 
   responsiveOptions: any[] = [
@@ -32,27 +36,28 @@ export class SelectViewComponent implements OnInit {
   public constructor(
     private pokemonDataService: PokemonDataService,
     private route: ActivatedRoute,
+    private config: DynamicDialogConfig,
+    private ref: DynamicDialogRef
   ) {}
   
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params: ParamMap) => {
+    /* this.route.paramMap.subscribe((params: ParamMap) => {
       this.pokemonName = params.get('name');
       console.log(this.pokemonName);
 
       // Fetch details for the new PokemonName
       this.getDetails();
-    });
+    }); */
+    this.pokemonData = this.config.data;
+    this.pokemonDetails = this.config.data.detail;
+    this.pokemonName = this.config.data.name;
+    console.log(this.pokemonData);
+    this.assignImg();
+    this.getDesc() ;
   }
 
-  getDetails(){
-    this.pokemonDataService.getDetails(this.pokemonName).subscribe(
-      (detail: any) => {
-        this.pokemonDetails = detail;
-        console.log(this.pokemonDetails);
-        this.assignImg();
-      }
-    );
-    this.pokemonDataService.getDesc(this.pokemonName).subscribe(
+  getDesc(){
+    this.pokemonDataService.getDesc(this.pokemonDetails.species.url).subscribe(
       (desc: any) => {
         this.pokemonDescription = desc;
         console.log(this.pokemonDescription);
@@ -94,7 +99,37 @@ export class SelectViewComponent implements OnInit {
     return Math.round(kg * 2.20462);
   }
 
-  typeColor(type: any){
+  statPercent(stat: any, max: any){
+    return Math.round((stat / max) * 100);
+  }
+
+  percentColor(pct: any){
+    if(pct >= 0 && pct <= 9){
+      return '#FF3333'; 
+    } else if(pct >= 10 && pct <= 19){
+      return '#FF9933'; 
+    } else if(pct >= 20 && pct <= 29){
+      return '#FFFF33'; 
+    } else if(pct >= 30 && pct <= 39){
+      return '#99FF33'; 
+    } else if(pct >= 40 && pct <= 49){
+      return '#33FF33'; 
+    } else if(pct >= 50 && pct <= 59){
+      return '#33FF99'; 
+    } else if(pct >= 60 && pct <= 69){
+      return '#33FFFF'; 
+    } else if(pct >= 70 && pct <= 79){
+      return '#3399FF'; 
+    } else if(pct >= 80 && pct <= 89){
+      return '#3333FF'; 
+    } else if(pct >= 90){
+      return '#9933FF';
+    } else {
+      return 'black';
+    }
+  }
+
+  public typeColor(type: any){
     switch(type){
       case 'grass': return '#7AC74C';
       case 'fire': return '#EE8130';
@@ -140,14 +175,11 @@ export class SelectViewComponent implements OnInit {
     }
   }
 
-  public bgColor(type: any){
-    if(type.length == 1){
-      let color = this.bgTypeColor(type[0].type.name);
-      return color;
-    } else if(type.length == 2) {
-      return 'linear-gradient(135deg, ' + this.bgTypeColor(type[0].type.name) + ', 60%, ' + this.bgTypeColor(type[1].type.name) + ')';
+  public bgColor(type1: any, type2: any){
+    if(type2 != null){
+      return 'linear-gradient(45deg, ' + this.bgTypeColor(type1) + ', ' + this.bgTypeColor(type2) + ')';
     } else {
-      return 'black';
+      return this.bgTypeColor(type1);
     }
   }
   
