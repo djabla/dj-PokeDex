@@ -21,15 +21,20 @@
     justify-content: center;
     padding-left: 1.2rem;
     padding-right: 1.2rem;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
     .detail-name{
-        width: 6.5rem;
+        width: 8rem;
+        font-weight: bold;
+        margin-right: 1rem;
+        text-align: right;
     }
     .detail-value{
-        width: 4rem;
+        width: 8rem;
     }
     .detail-ability{
         overflow: visible;
-        width: 4rem;
+        width: 7rem;
         span{
             white-space: nowrap;
         }

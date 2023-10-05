@@ -27,4 +27,8 @@ export class PokemonDataService {
   getDesc(url: any){
     return this.http.get(url);
   }
+
+  getEvolutionChain(url: any){
+    return this.http.get(url);
+  }
 }

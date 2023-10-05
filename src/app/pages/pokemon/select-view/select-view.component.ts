@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PokemonDataService } from 'src/app/services/pokemon/pokemon-data.service';
-import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
+
+export interface ChainItem {
+  name: string;
+  url: string;
+}
 
 @Component({
   selector: 'pokedex-select-view',
@@ -15,8 +20,12 @@ export class SelectViewComponent implements OnInit {
   public pokemonData: any;
   public pokemonDetails: any;
   public pokemonDescription: any;
-  public pokemonGender: any;
+  public pokemonGender: any = {
+    male: 0,
+    female: 0
+  };
   public pokemonImg: any[] = [];
+  public evolutionChain: any[] = [];
 
   responsiveOptions: any[] = [
     {
@@ -53,7 +62,7 @@ export class SelectViewComponent implements OnInit {
     this.pokemonName = this.config.data.name;
     console.log(this.pokemonData);
     this.assignImg();
-    this.getDesc() ;
+    this.getDesc();
   }
 
   getDesc(){
@@ -61,10 +70,43 @@ export class SelectViewComponent implements OnInit {
       (desc: any) => {
         this.pokemonDescription = desc;
         console.log(this.pokemonDescription);
+        this.genderPct();
       }
     )
   }
 
+  getEvolutionChain(){
+    this.pokemonDataService.getEvolutionChain(this.pokemonDescription.evolution_chain.url).subscribe((item: any) => {
+      const chain = item.chain;
+      console.log(chain);
+      this.getEvolutionDetails(chain);
+    })
+  }
+
+  getEvolutionDetails(chain: any){
+    this.evolutionChain.push(
+      {
+        name: chain.species.name,
+        url: chain.species.url
+      }
+    )
+    if(chain.evolves_to.length > 0){
+      this.getEvolutionDetails(chain.evolves_to[0]);
+    }
+  }
+
+  totalStats(stats: any){
+    let total = 0;
+    stats.forEach((stat: any) => {
+      total += stat.base_stat;
+    })
+    return total;
+  }
+
+  genderPct(){
+    this.pokemonGender.female = Math.round((this.pokemonDescription.gender_rate / 8) * 100);
+    this.pokemonGender.male = 100 - this.pokemonGender.female;
+  }
   assignImg(){
     this.pokemonImg[0] = this.pokemonDetails.sprites.front_default;
     this.pokemonImg[1] = this.pokemonDetails.sprites.back_default;

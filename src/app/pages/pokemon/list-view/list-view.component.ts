@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SelectViewComponent } from '../select-view/select-view.component';
+import { forkJoin } from 'rxjs';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -90,21 +91,30 @@ export class ListViewComponent implements OnInit {
     console.log(this.pokeList);
   }
 
-  private getSearchList(){
-    this.pokemonDataService.getList(100).subscribe((raw: any) => {
-      raw.results.forEach((item: any) => {
-        this.pokemonDataService.getDetails(item.name).subscribe((detail: any) => {
-          this.searchList.push({
-            id: detail.id,
-            name: detail.name,
-            type1: detail.types[0].type.name,
-            type2: detail.types[1] ? detail.types[1].type.name : null,
-            image: detail.sprites.front_default,
-            detail: detail,
-          })
-        })
-      })
-    });
+  private getSearchList() {
+    const batchSize = 100;
+    const totalPokemon = 200;
+  
+    for (let offset = 0; offset < totalPokemon; offset += batchSize) {
+      this.pokemonDataService.getList(batchSize, offset).subscribe((raw: any) => {
+        const requests = raw.results.map((item: any) => {
+          return this.pokemonDataService.getDetails(item.name);
+        });
+  
+        forkJoin(requests).subscribe((details: any) => {
+          details.forEach((detail: any) => {
+            this.searchList.push({
+              id: detail.id,
+              name: detail.name,
+              type1: detail.types[0].type.name,
+              type2: detail.types[1] ? detail.types[1].type.name : null,
+              image: detail.sprites.front_default,
+              detail: detail,
+            });
+          });
+        });
+      });
+    }
   }
 
   openDetails(detail: any){
