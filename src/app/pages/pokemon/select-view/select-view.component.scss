@@ -58,3 +58,23 @@
         width: 12rem;
     }
 }
+
+.card__chips{
+    height: 1.3rem;
+    width: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    border-radius: 10px;
+    margin-bottom: 0.3rem;
+    p{
+        font-size: 1.1rem;
+        margin: 0;
+    }
+}
+
+.card__chips:last-of-type{
+    margin-bottom: 0;
+}
