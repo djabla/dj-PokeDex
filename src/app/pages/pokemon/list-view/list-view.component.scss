@@ -57,11 +57,6 @@
     border-radius: 12px;
     overflow-y: scroll;
     height: 65vh;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-.content-area::-webkit-scrollbar{ /* Chrome, Safari and Opera */
-    display: none;
 }
 .content {
     width: 300px;

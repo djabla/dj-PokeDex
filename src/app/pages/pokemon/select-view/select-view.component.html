@@ -23,16 +23,16 @@
 </div>
 
 <ng-template #__about>
-    <div class="w-full h-full flex flex-row justify-content-around align-content-center">
+    <div class="w-full h-full flex flex-row justify-content-around align-content-center text-white">
         <div style="width: 50%; height: 100%;"> 
             <div class="detail">
                 <span class="detail-name">ID:</span> <span class="detail-value">#{{convertToFourDigits(pokemonData.id)}}</span>
             </div>
             <div class="detail">
-                <span class="detail-name">Height:</span> <span class="detail-value">{{pokemonDetails.height}}</span>
+                <span class="detail-name">Height:</span> <span class="detail-value">{{(pokemonDetails.height/10)}}m or {{convertToFeet((pokemonDetails.height/10))}}</span>
             </div>
             <div class="detail">
-                <span class="detail-name">Weight:</span> <span class="detail-value">{{pokemonDetails.weight}}</span>
+                <span class="detail-name">Weight:</span> <span class="detail-value">{{(pokemonDetails.weight/10)}}kg or {{convertToLbs((pokemonDetails.weight/10))}}lbs</span>
             </div>
             
         </div>
@@ -70,7 +70,7 @@
 </ng-template>
 
 <ng-template #__stats>
-    <div class="flex flex-column">
+    <div class="flex flex-column text-white">
         <div class="w-full flex flex-row justify-content-around align-content-center">
             <div style="width: 50%; height: 100%;">
                 <div class="stat">

@@ -35,6 +35,7 @@ export class ListViewComponent implements OnInit {
   public searchList: Pokemon[] = [];
   private listHolder: Pokemon[] = [];
   private readonly limit = 50;
+  private offset = 50;
   public isError: boolean = false;
   dialogVisible: boolean = false;
   public pokemonDetails: any;
@@ -93,7 +94,7 @@ export class ListViewComponent implements OnInit {
 
   private getSearchList() {
     const batchSize = 100;
-    const totalPokemon = 200;
+    const totalPokemon = 1300;
   
     for (let offset = 0; offset < totalPokemon; offset += batchSize) {
       this.pokemonDataService.getList(batchSize, offset).subscribe((raw: any) => {
@@ -156,6 +157,32 @@ export class ListViewComponent implements OnInit {
   public resetFilter(){
     this.selectedType = undefined;
     this.filterByType();
+  }
+
+  public onScroll(event: any){
+    if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
+      console.log("Load more");
+      this.getMorePokemon();
+    }
+  }
+
+  private getMorePokemon(){
+    this.pokemonDataService.getList(this.limit, this.offset).subscribe((raw: any) => {
+      raw.results.forEach((item: any) => {
+        this.pokemonDataService.getDetails(item.name).subscribe((detail: any) => {
+          this.pokeList.push({
+            id: detail.id,
+            name: detail.name,
+            type1: detail.types[0].type.name,
+            type2: detail.types[1] ? detail.types[1].type.name : null,
+            image: detail.sprites.front_default,
+            detail: detail,
+          })
+        })
+      })
+    });
+    console.log(this.pokeList);
+    this.offset += this.limit;
   }
 
   public capitalizeFirstLetter(string: string) {
