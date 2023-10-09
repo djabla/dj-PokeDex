@@ -3,9 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NewnewComponent } from './newnew/newnew.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/pages', pathMatch: 'full'},
-  {path: 'pages', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)},
-  {path: 'newnew', component: NewnewComponent, pathMatch: 'full'},
+  {path: '', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)},
 ];
 
 @NgModule({

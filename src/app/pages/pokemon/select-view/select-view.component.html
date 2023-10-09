@@ -24,7 +24,18 @@
 
 <ng-template #__about>
     <div class="w-full h-full flex flex-row justify-content-around align-content-center text-white">
-        <div style="width: 50%; height: 100%;"> 
+        <div style="width: 50%; height: 100%;">
+            <div class="detail">
+                <span class="detail-name">Type/s:</span> 
+                <div class="detail-ability flex flex-column">
+                    <div class="card__chips" [ngStyle]="{ 'background-color': typeColor(pokemonData.type1) }">
+                        <p>{{capitalizeFirstLetter(pokemonData.type1)}}</p>
+                    </div>
+                    <div *ngIf="pokemonData.type2 != null" class="card__chips" [ngStyle]="{ 'background-color': typeColor(pokemonData.type2) }">
+                        <p>{{capitalizeFirstLetter(pokemonData.type2)}}</p>
+                    </div>
+                </div>
+            </div>
             <div class="detail">
                 <span class="detail-name">ID:</span> <span class="detail-value">#{{convertToFourDigits(pokemonData.id)}}</span>
             </div>

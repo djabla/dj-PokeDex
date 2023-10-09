@@ -170,7 +170,7 @@ export class ListViewComponent implements OnInit {
     this.pokemonDataService.getList(this.limit, this.offset).subscribe((raw: any) => {
       raw.results.forEach((item: any) => {
         this.pokemonDataService.getDetails(item.name).subscribe((detail: any) => {
-          this.pokeList.push({
+          this.listHolder.push({
             id: detail.id,
             name: detail.name,
             type1: detail.types[0].type.name,
@@ -181,6 +181,7 @@ export class ListViewComponent implements OnInit {
         })
       })
     });
+    this.filterByType();
     console.log(this.pokeList);
     this.offset += this.limit;
   }

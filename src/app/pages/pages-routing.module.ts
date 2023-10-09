@@ -17,16 +17,6 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'pokemon/:name',
-    component: SelectViewComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'search/pokemon/:name',
-    redirectTo: 'pokemon/:name',
-    pathMatch: 'full'
-  },
-  {
     path: 'berry',
     component: BerryListComponent,
     pathMatch: 'full'
