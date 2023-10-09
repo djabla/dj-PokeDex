@@ -11,23 +11,52 @@
     }
 }
 
+.filter-panel{
+    width: 15vw;
+    padding-top: 0.6rem;
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    .filter-buttons{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        .filter-button{
+            width: 4rem;
+            height: 2rem;
+            border-radius: 12px;
+            padding: 0.2rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            p{
+                margin: 0;
+                color: white;font-weight: 200;
+            }
+        }
+    }
+}
+
 .content-area{
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
     padding-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 35px;
-    max-width: 90vw;
+    width: 90vw;
     border: 3px solid rgb(49, 45, 45);
     border-radius: 12px;
     overflow-y: scroll;
-    max-height: 65vh;
-}
-.content-area::-webkit-scrollbar{
-    display: none;
+    height: 65vh;
 }
 .content {
     width: 300px;
@@ -37,4 +66,172 @@
 }
 .center-text {
     text-align: center;
+}
+
+.card {
+    width: 25%;
+    height: 35vh;
+    border-radius: 8px;
+    color: white;
+    overflow: hidden;
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+    cursor: pointer;
+}
+
+.card-content {
+    padding: 7px;
+    padding-top: 10px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    color: white;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    height: 100%;
+    .project-img-holder{
+        width: 100%;
+        height: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        .project-img{
+            object-fit: cover;
+            padding: 1rem;
+            flex-shrink: 1;
+            aspect-ratio: default;
+            max-width: 75%;
+            min-width: 60%;
+            max-height: 200%;
+        }
+    }
+    .card__chips-holder{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: 1;
+        gap: 0.3rem;
+        margin: 0.4rem;
+        .card__chips{
+            height: 1rem;
+            width: 3.3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-left: 0.4rem;
+            padding-right: 0.4rem;
+            border-radius: 10px;
+            p{
+                font-size: 0.7rem;
+                margin: 0;
+            }
+        }  
+    }
+}
+
+.card-content .card-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: inherit;
+}
+
+.card-content .card-para {
+    color: inherit;
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+.card:hover {
+    transform: rotateY(10deg) rotateX(10deg) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+    z-index: 1;
+}
+
+.card:hover:before {
+    transform: translateX(-100%);
+}
+
+.card:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+    z-index: 1;
+}
+
+.card:hover:after {
+    transform: translateX(100%);
+}
+
+.project-button {
+    --color: white;
+    font-family: inherit;
+    display: inline-block;
+    width: min-content;
+    height: min-content;
+    line-height: 2em;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid white;
+    background-color: transparent;
+    transition: color .5s;
+    z-index: 1;
+    font-size: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    color: white;
+}
+
+.project-button:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: var(--color);
+    height: 150px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.project-button:hover {
+    border: 2px solid rgb(216, 140, 0);
+    color: orange;
+}
+
+.project-button:before {
+    top: 100%;
+    left: 100%;
+    transition: all .5s;
+}
+
+.project-button:hover:before {
+    top: -30px;
+    left: -30px;
+}
+
+.project-button:active:before {
+    background: transparent;
+    transition: background 0s;
 }

@@ -1,30 +1,130 @@
-<div style="width: 100%; display: flex; justify-content: center;">
-<mat-card style="width: 80vw;">
-    <mat-card-header>
-        <mat-card-title><h1>{{capitalizeFirstLetter(pokemonDescription.name)}}</h1></mat-card-title>
-        <mat-card-subtitle><h2>#{{convertToFourDigits(pokemonDescription.id)}}</h2></mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <div>
-            <img [src]="pokemonDetails.sprites.front_default" alt="">
-            <img [src]="pokemonDetails.sprites.back_default" alt="">
-            <mat-card>
-                <h2>Type/s:</h2>
-                <mat-chip-listbox>
-                    <mat-chip *ngFor="let types of pokemonDetails.types" [ngStyle]="{ 'background-color': typeColor(types.type.name) }">
-                        {{types.type.name}}
-                    </mat-chip>
-                </mat-chip-listbox>
-                <h3>Height:</h3>
-                <p>{{(pokemonDetails.height/10)}}m or {{convertToFeet(pokemonDetails.height/10)}}ft</p>
-                <h3>Weight:</h3>
-                <p>{{pokemonDetails.weight/10}}kg or {{convertToLbs(pokemonDetails.weight/10)}}lbs</p>
-                <h3>Abilities:</h3>
-                <p *ngFor="let ability of pokemonDetails.abilities">
-                    {{capitalizeFirstLetter(ability.ability.name)}}
-                </p>
-            </mat-card>
-        </div>
-    </mat-card-content>
-</mat-card>
+<div class="w-full h-full flex flex-column justify-content-end align-items-center">
+    <div class="details-container w-full pt-1" style="height: 70%;"
+    [ngStyle]="{ 'background-image': bgColor(pokemonData.type1, pokemonData.type2), 'background-color': bgColor(pokemonData.type1, pokemonData.type2) }">
+        <img [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + pokemonData.id + '.png'"
+        class="pokemon-image">
+        <p-tabView styleClass="tabview-custom">
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <i style="margin-right: 0.3rem;" class="pi pi-book"></i>
+                    <span>About</span>
+                </ng-template>
+                <div style="width: 62vw; margin: 0;"><ng-container *ngTemplateOutlet="__about"></ng-container></div>
+            </p-tabPanel>
+            <p-tabPanel header="Header II">
+                <ng-template pTemplate="header">
+                    <i style="margin-right: 0.3rem;" class="pi pi-list"></i>
+                    <span>Base Stats</span>
+                </ng-template>
+                <div style="width: 62vw; margin: 0;"><ng-container *ngTemplateOutlet="__stats"></ng-container></div>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
 </div>
+
+<ng-template #__about>
+    <div class="w-full h-full flex flex-row justify-content-around align-content-center text-white">
+        <div style="width: 50%; height: 100%;"> 
+            <div class="detail">
+                <span class="detail-name">ID:</span> <span class="detail-value">#{{convertToFourDigits(pokemonData.id)}}</span>
+            </div>
+            <div class="detail">
+                <span class="detail-name">Height:</span> <span class="detail-value">{{(pokemonDetails.height/10)}}m or {{convertToFeet((pokemonDetails.height/10))}}</span>
+            </div>
+            <div class="detail">
+                <span class="detail-name">Weight:</span> <span class="detail-value">{{(pokemonDetails.weight/10)}}kg or {{convertToLbs((pokemonDetails.weight/10))}}lbs</span>
+            </div>
+            
+        </div>
+        <div style="width: 50%; height: 100%;"> 
+            <div class="detail">
+                <span class="detail-name">Abilities:</span> 
+                <div class="detail-ability flex flex-column">
+                    <span *ngFor="let item of pokemonDetails.abilities">{{capitalizeFirstLetter(item.ability.name)}} </span>
+                </div>
+            </div>
+            <div class="detail">
+                <span class="detail-name">Capture Rate:</span> <span class="detail-value">{{pokemonDescription.capture_rate}} / 255</span>
+            </div>
+            <div class="detail">
+                <span class="detail-name">Gender:</span> 
+                <div class="detail-value">
+                    <span style="margin-right: 0.1rem;"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" style="fill:#002f80">
+                        <path d="M289.8 46.8c3.7-9 12.5-14.8 22.2-14.8H424c13.3 0 24 10.7 24 
+                        24V168c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-33.4-33.4L321 204.2c19.5 28.4 31 62.7 31 99.8c0 
+                        97.2-78.8 176-176 176S0 401.2 0 304s78.8-176 176-176c37 0 71.4 11.4 99.8 31l52.6-52.6L295 
+                        73c-6.9-6.9-8.9-17.2-5.2-26.2zM400 80l0 0h0v0zM176 416a112 112 0 1 0 0-224 112 112 0 1 0 0 224z"/>
+                    </svg></span>
+                    <span style="margin-right: 0.3rem;">{{pokemonGender.male}}%</span>
+                    <span style="margin-right: 0.1rem;"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512" style="fill:#9e0000">
+                        <path d="M80 176a112 112 0 1 1 224 0A112 112 0 1 1 80 176zM224
+                         349.1c81.9-15 144-86.8 144-173.1C368 78.8 289.2 0 192 0S16 78.8 16 176c0 86.3 62.1 158.1 144
+                          173.1V384H128c-17.7 0-32 14.3-32 32s14.3 32 32 32h32v32c0 17.7 14.3 32 32 32s32-14.3 32-32V448h32c17.7 
+                          0 32-14.3 32-32s-14.3-32-32-32H224V349.1z"/>
+                    </svg></span>
+                    <span style="margin-right: 0.1rem;">{{pokemonGender.female}}%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #__stats>
+    <div class="flex flex-column text-white">
+        <div class="w-full flex flex-row justify-content-around align-content-center">
+            <div style="width: 50%; height: 100%;">
+                <div class="stat">
+                    <span class="stat-name">HP:</span> <span class="stat-value">{{pokemonDetails.stats[0].base_stat}}</span>
+                    <div class="stat-bar">
+                        <p-progressBar [showValue]="false" [color]="percentColor(statPercent(pokemonDetails.stats[0].base_stat, 200))"
+                        [value]="statPercent(pokemonDetails.stats[0].base_stat, 200)"></p-progressBar>
+                    </div>
+                </div>
+                <div class="stat">
+                    <span class="stat-name">Attack:</span> <span class="stat-value">{{pokemonDetails.stats[1].base_stat}}</span>
+                    <div class="stat-bar">
+                        <p-progressBar [showValue]="false" [color]="percentColor(statPercent(pokemonDetails.stats[1].base_stat, 130))"
+                        [value]="statPercent(pokemonDetails.stats[1].base_stat, 130)"></p-progressBar>
+                    </div>
+                </div>
+                <div class="stat">
+                    <span class="stat-name">Defense:</span> <span class="stat-value">{{pokemonDetails.stats[2].base_stat}}</span>
+                    <div class="stat-bar">
+                        <p-progressBar [showValue]="false" [color]="percentColor(statPercent(pokemonDetails.stats[2].base_stat, 150))"
+                        [value]="statPercent(pokemonDetails.stats[2].base_stat, 150)"></p-progressBar>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 50%; height: 100%;">
+                <div class="stat">
+                    <span class="stat-name">Sp. Attack:</span> <span class="stat-value">{{pokemonDetails.stats[3].base_stat}}</span>
+                    <div class="stat-bar">
+                        <p-progressBar [showValue]="false" [color]="percentColor(statPercent(pokemonDetails.stats[3].base_stat, 140))"
+                        [value]="statPercent(pokemonDetails.stats[3].base_stat, 140)"></p-progressBar>
+                    </div>
+                </div>
+                <div class="stat">
+                    <span class="stat-name">Sp. Defense:</span> <span class="stat-value">{{pokemonDetails.stats[4].base_stat}}</span>
+                    <div class="stat-bar">
+                        <p-progressBar [showValue]="false" [color]="percentColor(statPercent(pokemonDetails.stats[4].base_stat, 130))"
+                        [value]="statPercent(pokemonDetails.stats[4].base_stat, 130)"></p-progressBar>
+                    </div>
+                </div>
+                <div class="stat">
+                    <span class="stat-name">Speed:</span> <span class="stat-value">{{pokemonDetails.stats[5].base_stat}}</span>
+                    <div class="stat-bar">
+                        <p-progressBar [showValue]="false" [color]="percentColor(statPercent(pokemonDetails.stats[5].base_stat, 160))"
+                        [value]="statPercent(pokemonDetails.stats[5].base_stat, 160)"></p-progressBar>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="stat">
+            <span class="stat-name">Total:</span> <span class="stat-value">{{totalStats(pokemonDetails.stats)}}</span>
+            <div class="stat-bar">
+                <p-progressBar [showValue]="false" [color]="percentColor(statPercent(totalStats(pokemonDetails.stats), 650))"
+                [value]="statPercent(totalStats(pokemonDetails.stats), 670)"></p-progressBar>
+            </div>
+        </div>
+    </div>
+</ng-template>

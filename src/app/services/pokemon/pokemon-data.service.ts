@@ -24,7 +24,11 @@ export class PokemonDataService {
     return this.http.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
   }
 
-  getDesc(name: any){
-    return this.http.get(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
+  getDesc(url: any){
+    return this.http.get(url);
+  }
+
+  getEvolutionChain(url: any){
+    return this.http.get(url);
   }
 }

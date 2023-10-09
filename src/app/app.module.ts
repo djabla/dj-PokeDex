@@ -8,12 +8,15 @@ import { HeaderComponent } from './templates/header/header.component';
 import { FooterComponent } from './templates/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalModules } from './global.module';
+import { NewnewComponent } from './newnew/newnew.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
+    NewnewComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,6 +24,7 @@ import { GlobalModules } from './global.module';
     PagesModule,
     BrowserAnimationsModule,
     GlobalModules,
+    CheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

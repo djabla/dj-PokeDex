@@ -19,6 +19,15 @@ import { ButtonModule } from 'primeng/button';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { RippleModule } from 'primeng/ripple';
 import { CardModule } from 'primeng/card';
+import { TabViewModule } from 'primeng/tabview';
+import { GalleriaModule } from 'primeng/galleria';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { DropdownModule } from 'primeng/dropdown';
+import { AnimateModule } from 'primeng/animate';
+import { InputTextModule } from 'primeng/inputtext';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @NgModule({
     declarations: [],
@@ -47,6 +56,15 @@ import { CardModule } from 'primeng/card';
         ScrollPanelModule,
         RippleModule,
         CardModule,
+        TabViewModule,
+        GalleriaModule,
+        OverlayPanelModule,
+        DropdownModule,
+        AnimateModule,
+        InputTextModule,
+        DialogModule,
+        DynamicDialogModule,
+        ProgressBarModule,
 
     ]
 })
